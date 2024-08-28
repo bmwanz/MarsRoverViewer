@@ -1,6 +1,7 @@
 package com.bw.marsroverviewer.ui.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,7 +23,9 @@ import com.bw.marsroverviewer.R
 import com.bw.marsroverviewer.domain.model.roverUiModelList
 
 @Composable
-fun RoverList() {
+fun RoverList(
+    onClick: (roverName: String) -> Unit
+) {
     Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             items(count = roverUiModelList.size, itemContent = { index ->
@@ -30,7 +33,8 @@ fun RoverList() {
                     name = roverUiModelList[index].name,
                     img = roverUiModelList[index].img,
                     landingDate = roverUiModelList[index].landingDate,
-                    distanceTraveled = roverUiModelList[index].distance
+                    distanceTraveled = roverUiModelList[index].distance,
+                    onClick = onClick
                 )
             })
         }
@@ -42,9 +46,12 @@ fun Rover(
     name: String,
     img: Int,
     landingDate: String,
-    distanceTraveled: String
+    distanceTraveled: String,
+    onClick: (roverName: String) -> Unit
 ) {
-    Card(modifier = Modifier.padding(16.dp)) {
+    Card(modifier = Modifier
+        .padding(16.dp)
+        .clickable { onClick(name) }) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -64,5 +71,5 @@ fun Rover(
 @Composable
 @Preview
 fun RoverPreview() {
-    Rover("Perseverance", R.drawable.perseverance, "18 February 2021", "12.56 km")
+    Rover("Perseverance", R.drawable.perseverance, "18 February 2021", "12.56 km", {})
 }
