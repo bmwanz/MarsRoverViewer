@@ -2,6 +2,7 @@ package com.bw.marsroverviewer
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -27,7 +28,8 @@ fun NavCompose() {
             composable(Destinations.Manifest) { backStackEntry ->
                 backStackEntry.arguments?.getString("roverName")?.let {
                     ManifestScreen(
-                        roverName = it
+                        roverName = it,
+                        marsRoverManifestViewModel = hiltViewModel()
                     )
                 }
             }
